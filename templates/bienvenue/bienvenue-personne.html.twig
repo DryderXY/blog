@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bienvenue{% endblock %}
+
+{% block body %}
+    <p> {{ nom | upper }} qui roule, n'amasse pas mousse</p>
+
+    <a href="{{ path("app_bienvenue") }}">Bienvenue</a>
+{% endblock %}
