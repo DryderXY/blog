@@ -6,10 +6,10 @@
 
     <h1>Liste des articles</h1>
 
-    <ul>
+    <ol>
         {% for article in articles %}
-            <li>{{ article.titre }}</li>
+            <li><a href="{{ path("app_article_slug",{slug: article.slug}) }}">{{ article.titre }}</li></a>
         {% endfor %}
-    </ul>
+    </ol>
 
 {% endblock %}
