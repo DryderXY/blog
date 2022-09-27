@@ -4,11 +4,12 @@ namespace App\DataFixtures;
 
 use App\Entity\Article;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
-class ArticleFixtures extends Fixture
+class ArticleFixtures extends Fixture implements DependentFixtureInterface
 {
     private SluggerInterface $slugger;
 
@@ -32,12 +33,25 @@ class ArticleFixtures extends Fixture
             $article->setCreatedAt($faker->dateTimeBetween("-6 months"));
             $article->setSlug($this->slugger->slug($article->getTitre())->lower());
 
-            // Generer l'ordre INSERT dans la base
+            //Associer l'article à une catégorie
+            // Récupérer une référence d'une catégorie
+            $numCategorie = $faker->numberBetween(0,8);
+            $article->setCategorie($this->getReference("categorie".$numCategorie));
+
+            // Generer l'ordre INSERT
             // INSERT INTO article values ("Titre","Contenu"..)
             $manager->persist($article);
         }
 
         // Envoyer l'ordre INSERT vers la base
         $manager->flush();
+    }
+
+    public function getDependencies()
+    {
+        return [
+            CategorieFixtures::class
+        ];
+
     }
 }
