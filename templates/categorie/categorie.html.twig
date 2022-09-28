@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Voici la liste des catégories{% endblock %}
+
+{% block body %}
+
+    <h1>Catégorie : {{ categorie.titre }}</h1>
+    <div>{{ categorie.articles.count }} articles trouvés </div>
+
+    {% for article in articles %}
+
+        <div class="h2 pb-2 text-primary border-bottom border-dark">
+            {{ article.titre }}
+        </div>
+        <span>Catégorie : </span><a href="#"><span class="badge text-bg-secondary fs-5">{{ article.categorie.titre }}</span></a>
+        <br><span class="badge rounded-pill text-bg-info mb-3">Créé le {{ article.createdAt | date("d/m/Y") }}</span>
+        <div class="border border-secondary p-2 mb-2 rounded-4">{{ article.contenu }}</div>
+
+    {% endfor %}
+
+{% endblock %}

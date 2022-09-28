@@ -14,9 +14,23 @@ class Article {
     slug : string
 }
 
+class Commentaire {
+    id : int
+    contenu : string
+    createdAt : datetime
+}
+
+class Utilisateur {
+    id : int
+    prenom : string
+    nom : string
+    pseudo : string
+}
 
 
 Categorie "0..*" -- "0..1" Article
+Commentaire "0..*" -- "1..1" Article
+Utilisateur "0..1" -- "0..*" Commentaire
 
 
 @enduml

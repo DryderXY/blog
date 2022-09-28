@@ -12,7 +12,7 @@
 
     <ol class="list-group">
         {% for article in articles %}
-            <li class="list-group-item">{{ article.titre }} <a href="{{ path("app_article_slug",{slug: article.slug}) }}">Info</li></a>
+            <li class="list-group-item"><a href="{{ path("app_article_slug",{slug: article.slug}) }}"><i class="bi bi-info-square"></i></i></a> {{ article.titre }}</li>
         {% endfor %}
     </ol>
 
