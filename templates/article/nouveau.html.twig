@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Création Article{% endblock %}
+
+{% block body %}
+
+    <h1 class="mb-3">Création d'un article</h1>
+    {{ form_start(formArticle) }}
+    {{ form_row(formArticle.titre) }}
+    {{ form_row(formArticle.contenu) }}
+    <input class="btn btn-primary" value="Ajouter" type="submit">
+    {{ form_end(formArticle) }}
+
+
+
+
+{% endblock %}
