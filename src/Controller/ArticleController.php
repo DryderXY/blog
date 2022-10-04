@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\Validator\Constraints\Date;
 
 class ArticleController extends AbstractController
 {
@@ -60,12 +61,24 @@ class ArticleController extends AbstractController
         ]);
     }
 
-    #[Route('/articles/nouveau', name: 'app_articles_nouveau', priority: 1)]
-    public function insert(SluggerInterface $slugger): Response{
+    #[Route('/articles/nouveau', name: 'app_articles_nouveau', methods: ["GET","POST"] ,priority: 1 )]
+    public function insert(SluggerInterface $slugger, Request $request): Response{
         $article = new Article();
 
         //Création du formulaire
         $formArticle = $this->createForm(ArticleType::class,$article);
+
+        // Reconnaître si le formulaire a été soumis ou non
+        $formArticle->handleRequest($request);
+        // Est-ce que le formulaire à été soumis
+        if ($formArticle->isSubmitted() && $formArticle->isValid()) {
+            $article->setSlug($slugger->slug($article->getTitre())->lower())
+                    ->setCreatedAt(new \DateTime());
+            // Insérer l'article dans la base de données
+            $this->articleRepository->add($article,true);
+            return $this->redirectToRoute("app_articles");
+        }
+
         // Appel de la vue twig permettant d'afficher le form
         return $this->renderForm("article/nouveau.html.twig",[
             "formArticle"=>$formArticle
