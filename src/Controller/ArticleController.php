@@ -6,6 +6,7 @@ use App\Entity\Article;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
 
+use App\Repository\CommentaireRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,11 +19,13 @@ use Symfony\Component\Validator\Constraints\Date;
 class ArticleController extends AbstractController
 {
     private ArticleRepository $articleRepository;
+    private CommentaireRepository $commentaireRepository;
 
     // Demander à Symfony d'injecter une instance de articleRepository
     // à la création du controller (Instance de articleController)
-    public function __construct(ArticleRepository $articleRepository){
+    public function __construct(ArticleRepository $articleRepository, CommentaireRepository $commentaireRepository){
         $this->articleRepository = $articleRepository;
+        $this->commentaireRepository = $commentaireRepository;
     }
 
 
@@ -55,9 +58,11 @@ class ArticleController extends AbstractController
     public function getArticle($slug): Response
     {
         $article = $this->articleRepository->findOneBy(["slug"=>$slug]);
+        $commentaires = $this->commentaireRepository->findBy(["article_id" => $this->articleRepository->findBy(["slug" => $slug])]);
 
         return $this->render('article/article.html.twig',[
-            "article" => $article
+            "article" => $article,
+            "commentaires" => $commentaires
         ]);
     }
 

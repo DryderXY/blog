@@ -13,13 +13,18 @@ class UtilisateurFixtures extends Fixture
     {
 
         $faker = Factory::create("fr_FR");
-        for ($i=0;$i<=50;$i++){
+        for ($i=0;$i<50;$i++){
             $utilisateur = new Utilisateur();
             $utilisateur->setNom($faker->firstName);
             $utilisateur->setPrenom($faker->lastName);
             $utilisateur->setPseudo($faker->userName);
+
+            //Créer une référence sur la catégorie
+            $this->addReference("utilisateur".$i,$utilisateur);
+
             $manager->persist($utilisateur);
         }
+
         $manager->flush();
     }
 }

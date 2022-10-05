@@ -16,4 +16,32 @@
         </div>
     </div>
 
+    {% if article.commentaires.count >1 %}
+        <h3 class="mb-3">{{ article.commentaires.count}} Commentaires</h3>
+
+    {% elseif article.commentaires.count == 0 %}
+        <h3 class="mb-3">Aucun commentaire</h3>
+
+    {% else %}
+        <h3 class="mb-3">{{ article.commentaires.count}} Commentaire</h3>
+    {% endif %}
+
+
+    <div class="">
+        {% for commentaire in commentaires %}
+            <ul class="border border-5 rounded">
+                {%if commentaire.utilisateurId %}
+                    <li><h5><b>{{ commentaire.utilisateurId.pseudo }} </b>{{ commentaire.createdAt | date("d/m/Y") }}</h5></li>
+                {%else %}
+                    <li><h5> <b>Anonyme {{ commentaire.createdAt | date("d/m/Y") }}</b></h5></li>
+                {% endif %}
+                <p class="mb-3">{{ commentaire.contenu }}</p>
+            </ul>
+        {% endfor %}
+    </div>
+
+
+
+
+
 {% endblock %}
