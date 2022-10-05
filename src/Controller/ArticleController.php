@@ -43,7 +43,7 @@ class ArticleController extends AbstractController
 
         // Mise en place de la pagination
         $articles = $paginator->paginate(
-            $this->articleRepository->findBy([],["createdAt" => "DESC"]), /* query NOT result */
+            $this->articleRepository->findBy(["publie"=> true],["createdAt" => "DESC"]), /* query NOT result */
             $request->query->getInt('page', 1), /*page number*/
             10 /*limit per page*/
         );
@@ -55,9 +55,24 @@ class ArticleController extends AbstractController
     }
 
     #[Route('/articles/{slug}', name: 'app_article_slug')]
-    public function getArticle($slug): Response
+    public function getArticle($slug, Request $request): Response
     {
         $article = $this->articleRepository->findOneBy(["slug"=>$slug]);
+
+        //Création du formulaire
+        $formArticle = $this->createForm(ArticleType::class,$article);
+
+        // Reconnaître si le formulaire a été soumis ou non
+        $formArticle->handleRequest($request);
+        // Est-ce que le formulaire à été soumis
+        if ($formArticle->isSubmitted() && $formArticle->isValid()) {
+            $article->setCreatedAt(new \DateTime());
+
+            // Insérer l'article dans la base de données
+            $this->articleRepository->add($article,true);
+
+            return $this->redirectToRoute("app_articles");
+
         $commentaires = $this->commentaireRepository->findBy(["article_id" => $this->articleRepository->findBy(["slug" => $slug])]);
 
         return $this->render('article/article.html.twig',[

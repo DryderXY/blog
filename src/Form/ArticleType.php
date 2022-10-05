@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class ArticleType extends AbstractType
 {
@@ -27,6 +28,10 @@ class ArticleType extends AbstractType
                 "required" =>  false,
                 "placeholder" => "Aucune catégorie"
             ])
+            ->add('publie', CheckboxType::class, [
+                'label'    => 'Montrer cet article publiquement ?',
+                'required' => false,
+            ]);
         ;
     }
 

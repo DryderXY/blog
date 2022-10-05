@@ -18,7 +18,7 @@ class AccueilController extends AbstractController
     #[Route('/', name: 'app_accueil')]
     public function getDernierArticles(): Response
     {
-        $articles = $this->articleRepository->findBy([],["createdAt" => "DESC"],10);
+        $articles = $this->articleRepository->findBy(["publie" => true],["createdAt" => "DESC"],10);
         return $this->render('accueil/accueil.html.twig', [
             'articles' => $articles,
         ]);

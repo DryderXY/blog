@@ -17,13 +17,13 @@
     </div>
 
     {% if article.commentaires.count >1 %}
-        <h3 class="mb-3">{{ article.commentaires.count}} Commentaires</h3>
+        <h3 class="mb-4">{{ article.commentaires.count}} Commentaires</h3>
 
     {% elseif article.commentaires.count == 0 %}
-        <h3 class="mb-3">Aucun commentaire</h3>
+        <h3 class="mb-4">Pas de commentaire :(</h3>
 
     {% else %}
-        <h3 class="mb-3">{{ article.commentaires.count}} Commentaire</h3>
+        <h3 class="mb-4">{{ article.commentaires.count}} Commentaire</h3>
     {% endif %}
 
 
