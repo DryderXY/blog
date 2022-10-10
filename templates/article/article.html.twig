@@ -12,7 +12,7 @@
                 <h5 class="card-title">Catégorie : <span class="badge text-bg-secondary fs-5">{{ article.categorie.titre }}</span></h5>
             {% endif %}
             <p class="card-text"><span class="badge rounded-pill text-bg-info mb-3">Créé le {{ article.createdAt | date("d/m/Y") }}</span></p>
-            <p class="card-text ">{{ article.contenu }}</p>
+            <p class="card-text ">{{ article.contenu | raw}}</p>
         </div>
     </div>
 

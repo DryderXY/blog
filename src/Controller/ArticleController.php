@@ -79,7 +79,7 @@ class ArticleController extends AbstractController
             "article" => $article,
             "commentaires" => $commentaires
         ]);
-    }
+    }}
 
     #[Route('/articles/nouveau', name: 'app_articles_nouveau', methods: ["GET","POST"] ,priority: 1 )]
     public function insert(SluggerInterface $slugger, Request $request): Response{
