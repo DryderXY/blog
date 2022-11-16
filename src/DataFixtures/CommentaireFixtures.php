@@ -7,7 +7,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Psr\Log\NullLogger;
+
 
 class CommentaireFixtures extends Fixture implements DependentFixtureInterface
 {
